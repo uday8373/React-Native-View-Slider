@@ -1,0 +1,30 @@
+{
+  "name": "react-native-view-slider",
+  "version": "1.0.4",
+  "description": "A fully customizable slider for react native applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uday8373/React-Native-View-Slider.git"
+  },
+  "keywords": [
+    "React-native-slider",
+    "expo",
+    "slider",
+    "carousel",
+    "banner",
+    "react-native",
+    "react",
+    "react-native",
+    "expo-slider"
+  ],
+  "author": "Uday kumar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uday8373/React-Native-View-Slider/issues"
+  },
+  "homepage": "https://github.com/uday8373/React-Native-View-Slider#readme"
+}
