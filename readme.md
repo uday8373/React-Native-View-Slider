@@ -4,6 +4,10 @@ A robust simple lightweight library for sliding views/images/anything in react-n
 - Support
   -> This module will support both expo managed application and bare react native applications.
 
+
+![React-native-view-slider](demo.png)
+
+
 # Install the library
 
     npm i react-native-view-slider
@@ -28,23 +32,27 @@ A robust simple lightweight library for sliding views/images/anything in react-n
     function App() {
       return (
         <>
-          <ViewSlider
-              renderSlides = {
+          <View_Slider 
+            renderSlides = {
               <>
-                  <View style={styles.viewBox}><Text>ONE</Text></View>
-                  <View style={styles.viewBox}><Text>TWO</Text></View>
-                  <View style={styles.viewBox}><Text>THREE</Text></View>
-                  <View style={styles.viewBox}><Text>FOUR</Text></View>
-              </>
+                <View style={styles.viewBox}>
+                  <Image source={{uri: 'https://image.shutterstock.com/image-photo/beautiful-autumn-scene-hintersee-lake-260nw-747646759.jpg'}} style={{height: 200, width}}/>
+                </View>
+                <View style={styles.viewBox}><Text>TWO</Text></View>
+                <View style={styles.viewBox}><Text>THREE</Text></View>
+                <View style={styles.viewBox}><Text>FOUR</Text></View>
+             </>
           }
-          style={styles.slider}
-          height = {200}
-          slideCount = {4}
-          dots = {true}
-          dotsContainerStyle = {style.dotContainer} 
-          dotActiveColor = 'red'
-          dotInactiveColor = 'gray'
-          />
+          style={styles.slider}     //Main slider container style
+          height = {200}    //Height of your slider
+          slideCount = {4}    //How many views you are adding to slide
+          dots = {true}     // Pagination dots visibility true for visibile 
+          dotActiveColor = 'red'     //Pagination dot active color
+          dotInactiveColor = 'gray'    // Pagination do inactive color
+          dotsContainerStyle={styles.dotContainer}     // Container style of the pagination dots
+          autoSlide = {true}    //The views will slide automatically
+          slideInterval = {1000}    //In Miliseconds
+         />
         </>
       );
     };
