@@ -2,10 +2,11 @@
 A robust simple lightweight library for sliding views/images/anything in react-native applications.
 
 - Support
+  -> React native => 0.59.0
   -> This module will support both expo managed application and bare react native applications.
 
 
-![React-native-view-slider](demo.png)
+![React-native-view-slider](demo.png) ![React-native-view-slider](demo-android.png)
 
 
 # Install the library

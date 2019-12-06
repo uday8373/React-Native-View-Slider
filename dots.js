@@ -6,6 +6,9 @@ export default Indicators = (props) => {
   const inactiveColor = props.inactiveColor
   const dotsCount = props.count
   const activeDot = props.activeDot
+  const containerStyle = props.containerStyle
+  console.log("COntainer",containerStyle );
+  
 
   const createDots = () => {
     let dot = []
@@ -17,7 +20,7 @@ export default Indicators = (props) => {
 
   return(
     
-    <View style={styles.dotContainer}>
+    <View style={[styles.dotContainer, containerStyle]}>
       {createDots().map((dot, i) => (<React.Fragment key={i}>{dot}</React.Fragment>))}
     </View>
   )
