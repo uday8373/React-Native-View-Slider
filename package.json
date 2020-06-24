@@ -1,6 +1,6 @@
 {
   "name": "react-native-view-slider",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A fully customizable slider for react native applications",
   "main": "index.js",
   "scripts": {
