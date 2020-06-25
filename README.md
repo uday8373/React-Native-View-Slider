@@ -86,7 +86,7 @@ A robust simple lightweight library for sliding views/images/anything in react-n
 * renderSlides : Views/sliders content 
 * style : slider container style[ Full customize your slider container with style prop ]
 * height : Your slider height
-* slideCount : Number of slides you are giving [Required]
+* slidesCount : Number of slides you are giving [Required]
 * dots : default false [If you want the slider dots to be shown set it to true]
 * dotActiveColor : active dot color
 * dotInactiveColor : Inactive dot color 
