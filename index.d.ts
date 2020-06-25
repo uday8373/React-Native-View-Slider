@@ -6,13 +6,14 @@ declare module 'react-native-view-slider' {
     onScroll?: function,
     height?: string, 
     style?: StyleProp<ViewStyle>,
+    step?: number,
     dotsContainerStyle?: StyleProp<ViewStyle>,
     dotActiveColor?: string,
     dotInactiveColor?: string,
     dots?: boolean,
     autoSlide?: boolean, 
-    slideInterval?: number, 
-    slideCount?: number
+    slideInterval?: number,
+    slideCount?: function,
     renderSlides: JSX.Element, 
   }> {}
 }

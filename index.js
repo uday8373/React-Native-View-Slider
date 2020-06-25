@@ -5,8 +5,10 @@ import Dots from './dots';
 const { width } = Dimensions.get('window');
 
 export default class ViewSlider extends React.Component {
-  constructor(props) {
+  constructor() {
     super();
+
+    this.slidesCount = 0;
   }
 
   state = {
@@ -19,8 +21,20 @@ export default class ViewSlider extends React.Component {
   }
 
   componentDidMount() {
+    if (this.props.hasOwnProperty('renderSlides') 
+      && this.props.renderSlides.hasOwnProperty('props') 
+      && this.props.renderSlides.props.hasOwnProperty('children')) this.slidesCount = Object.keys(this.props.renderSlides.props.children).length;
+
     if (this.props.autoSlide == true && this.scroll.scrollTo) {
       this.startAutoSlide();
+    }
+
+    if (this.props.hasOwnProperty('step')) {
+      this.setStep(this.props.step);
+    }
+
+    if (this.props.hasOwnProperty('slidesCount')) {
+      this.props.slidesCount(this.slidesCount);
     }
   }
 
@@ -29,12 +43,12 @@ export default class ViewSlider extends React.Component {
     if (interval < 1000) {
       console.warn('slideInterval time must be at least 1000 milisecond.');
     } else {
-      const count = this.props.slideCount;
+      const count = this.slidesCount;
       let step = 1;
       setInterval(() => {
-        this.scroll.scrollTo({ x: width * step });
-        this.setState({ activeDot: step + 1 });
-        if (count == step + 1) {
+        this.setStep(step + 1);
+
+        if (count === step + 1) {
           step = 0;
         } else {
           step++;
@@ -43,6 +57,15 @@ export default class ViewSlider extends React.Component {
     }
   };
 
+  setStep = (step = 1) => {
+    const scrollToX = (this.slidesCount * width) - ((this.slidesCount - (step - 1)) * width);
+    
+    setTimeout(() => {
+      this.scroll.scrollTo({ x: scrollToX });
+      this.setState({ activeDot: step });
+    }, 50);
+  }
+
   onScrollCb = () => {
     if (this.props.hasOwnProperty('onScroll')) this.props.onScroll(this.state.activeDot);
   }
@@ -50,17 +73,9 @@ export default class ViewSlider extends React.Component {
   onScroll = (event) => {
     const scrollPositionX = event.nativeEvent.contentOffset.x;
     const offset = 100;
-    let slidesLength;
 
-    if (this.props.hasOwnProperty('renderSlides') 
-      && this.props.renderSlides.hasOwnProperty('props') 
-      && this.props.renderSlides.props.hasOwnProperty('children')) slidesLength = Object.keys(this.props.renderSlides.props.children).length;
-
-      scrollPositionX >= width * 2 - offset &&
-      scrollPositionX <= width * 3 - offset
-
-    if (slidesLength) {
-      for (let iter of new Array(slidesLength).fill(null).keys()) {
+    if (this.slidesCount > 0) {
+      for (let iter of new Array(this.slidesCount).fill(null).keys()) {
         const index = iter + 1;
         
         if (scrollPositionX >= (width * iter) - offset && scrollPositionX <= (width * index) - offset) {
@@ -76,7 +91,6 @@ export default class ViewSlider extends React.Component {
       dots,
       dotActiveColor,
       dotInactiveColor,
-      slideCount,
       dotsContainerStyle,
     } = this.props;
     const { activeDot } = this.state;
@@ -98,7 +112,7 @@ export default class ViewSlider extends React.Component {
           <Dots
             activeColor={dotActiveColor}
             inactiveColor={dotInactiveColor}
-            count={slideCount}
+            count={slidesCount}
             activeDot={activeDot}
             containerStyle={dotsContainerStyle}
           />
