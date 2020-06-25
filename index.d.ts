@@ -3,6 +3,7 @@ import { StyleProp, ViewStyle } from 'react-native';
 
 declare module 'react-native-view-slider' {
   export default class ViewSlider extends React.Component<{
+    onScroll?: function,
     height?: string, 
     style?: StyleProp<ViewStyle>,
     dotsContainerStyle?: StyleProp<ViewStyle>,

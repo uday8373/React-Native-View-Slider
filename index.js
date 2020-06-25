@@ -5,6 +5,10 @@ import Dots from './dots';
 const { width, height } = Dimensions.get('window');
 
 export default class ViewSlider extends React.Component {
+  constructor(props) {
+    super();
+  }
+
   state = {
     activeDot: 1,
     autoSlide: false,
@@ -37,6 +41,11 @@ export default class ViewSlider extends React.Component {
         }
       }, interval);
     }
+  };
+
+  onScrollCb = () => {
+    if (this.props.hasOwnProperty('onScroll'))
+      this.props.onScroll(this.state.activeDot);
   };
 
   onScroll = (event) => {
@@ -84,110 +93,106 @@ export default class ViewSlider extends React.Component {
     //   this.setState({activeDot: 20})
     // }
 
-    //console.log("X", event.nativeEvent.contentOffset.x);
-    //console.log("Y", event.nativeEvent.contentOffset.y);
-    //console.log("WIDTH", width);
-
     const scrollPositionX = event.nativeEvent.contentOffset.x;
     const offset = 100;
 
     if (scrollPositionX >= 0 && scrollPositionX <= parseInt(width - offset)) {
-      this.setState({ activeDot: 1 });
+      this.setState({ activeDot: 1 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width - offset &&
       scrollPositionX <= width * 2 - offset
     ) {
-      this.setState({ activeDot: 2 });
+      this.setState({ activeDot: 2 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width * 2 - offset &&
       scrollPositionX <= width * 3 - offset
     ) {
-      this.setState({ activeDot: 3 });
+      this.setState({ activeDot: 3 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width * 3 - offset &&
       scrollPositionX <= width * 4 - offset
     ) {
-      this.setState({ activeDot: 4 });
+      this.setState({ activeDot: 4 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width * 4 - offset &&
       scrollPositionX <= width * 5 - offset
     ) {
-      this.setState({ activeDot: 5 });
+      this.setState({ activeDot: 5 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width * 5 - offset &&
       scrollPositionX <= width * 6 - offset
     ) {
-      this.setState({ activeDot: 6 });
+      this.setState({ activeDot: 6 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width * 6 - offset &&
       scrollPositionX <= width * 7 - offset
     ) {
-      this.setState({ activeDot: 7 });
+      this.setState({ activeDot: 7 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width * 7 - offset &&
       scrollPositionX <= width * 8 - offset
     ) {
-      this.setState({ activeDot: 8 });
+      this.setState({ activeDot: 8 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width * 8 - offset &&
       scrollPositionX <= width * 9 - offset
     ) {
-      this.setState({ activeDot: 9 });
+      this.setState({ activeDot: 9 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width * 9 - offset &&
       scrollPositionX <= width * 10 - offset
     ) {
-      this.setState({ activeDot: 10 });
+      this.setState({ activeDot: 10 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width * 10 - offset &&
       scrollPositionX <= width * 11 - offset
     ) {
-      this.setState({ activeDot: 11 });
+      this.setState({ activeDot: 11 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width * 11 - offset &&
       scrollPositionX <= width * 12 - offset
     ) {
-      this.setState({ activeDot: 12 });
+      this.setState({ activeDot: 12 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width * 12 - offset &&
       scrollPositionX <= width * 13 - offset
     ) {
-      this.setState({ activeDot: 13 });
+      this.setState({ activeDot: 13 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width * 13 - offset &&
       scrollPositionX <= width * 14 - offset
     ) {
-      this.setState({ activeDot: 14 });
+      this.setState({ activeDot: 14 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width * 14 - offset &&
       scrollPositionX <= width * 15 - offset
     ) {
-      this.setState({ activeDot: 15 });
+      this.setState({ activeDot: 15 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width * 15 - offset &&
       scrollPositionX <= width * 16 - offset
     ) {
-      this.setState({ activeDot: 16 });
+      this.setState({ activeDot: 16 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width * 16 - offset &&
       scrollPositionX <= width * 17 - offset
     ) {
-      this.setState({ activeDot: 17 });
+      this.setState({ activeDot: 17 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width * 17 - offset &&
       scrollPositionX <= width * 18 - offset
     ) {
-      this.setState({ activeDot: 18 });
+      this.setState({ activeDot: 18 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width * 18 - offset &&
       scrollPositionX <= width * 19 - offset
     ) {
-      this.setState({ activeDot: 19 });
+      this.setState({ activeDot: 19 }, this.onScrollCb);
     } else if (
       scrollPositionX >= width * 19 - offset &&
       scrollPositionX <= width * 20 - offset
     ) {
-      this.setState({ activeDot: 20 });
+      this.setState({ activeDot: 20 }, this.onScrollCb);
     }
   };
 
@@ -200,6 +205,7 @@ export default class ViewSlider extends React.Component {
       dotsContainerStyle,
     } = this.props;
     const { activeDot } = this.state;
+
     return (
       <View style={[{ width, height: this.props.height }, this.props.style]}>
         <ScrollView
