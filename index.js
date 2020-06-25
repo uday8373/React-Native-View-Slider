@@ -9,18 +9,15 @@ export default class ViewSlider extends Component {
     super();
 
     this.slidesCount = 0;
-    this.scrollPosX = 0;
   }
 
   state = {
-    scrollPosX: 0,
     step: 1,
     autoSlide: false,
   };
 
   static getDerivedStateFromProps(props, state) {
     return {
-      scrollPosX: props.hasOwnProperty('scrollPosX') ? state.scrollPosX : 0,
       step: props.hasOwnProperty('step') ? props.step : 1,
       autoSlide: props.hasOwnProperty('autoSlide') ? props.autoSlide : false,
     };
@@ -35,7 +32,7 @@ export default class ViewSlider extends Component {
       && this.props.renderSlides.hasOwnProperty('props') 
       && this.props.renderSlides.props.hasOwnProperty('children')) this.slidesCount = Object.keys(this.props.renderSlides.props.children).length;
 
-    if (this.props.autoSlide == true && this.scroll.scrollTo) {
+    if (this.props.autoSlide === true && this.scroll.scrollTo) {
       this.startAutoSlide();
     }
 
@@ -82,7 +79,7 @@ export default class ViewSlider extends Component {
   onMomentumScrollEnd = ({ nativeEvent }) => {
     const index = Math.round(nativeEvent.contentOffset.x / width) + 1;
  
-    this.setState({ step: index }, this.props.onScroll(index));
+    this.setState({ step: index }, this.onScrollCb(index));
   }
  
   render() {
@@ -102,7 +99,6 @@ export default class ViewSlider extends Component {
           pagingEnabled={true}
           ref={(node) => (this.scroll = node)}
           scrollEventThrottle={70}
-          onScroll={this.onScroll}
           onMomentumScrollEnd={this.onMomentumScrollEnd}
           showsHorizontalScrollIndicator={false}
         >

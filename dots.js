@@ -10,6 +10,7 @@ export default Indicators = (props) => {
 
   const createDots = () => {
     let dot = [];
+    
     for (let i = 1; i <= dotsCount; i++) {
       dot.push(
         <View
