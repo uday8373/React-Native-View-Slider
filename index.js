@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, ScrollView, Dimensions } from 'react-native';
 import Dots from './dots';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export default class ViewSlider extends React.Component {
   constructor(props) {
@@ -44,155 +44,30 @@ export default class ViewSlider extends React.Component {
   };
 
   onScrollCb = () => {
-    if (this.props.hasOwnProperty('onScroll'))
-      this.props.onScroll(this.state.activeDot);
-  };
+    if (this.props.hasOwnProperty('onScroll')) this.props.onScroll(this.state.activeDot);
+  }
 
   onScroll = (event) => {
-    // const scrollPositionX = event.nativeEvent.contentOffset.x
-
-    // if(scrollPositionX >= 0 && scrollPositionX <= (width - 50)) {
-    //   this.setState({activeDot: 1})
-    // } else if(scrollPositionX >= width && scrollPositionX <= ((width * 2) - 10)) {
-    //   this.setState({activeDot: 2})
-    // } else if(scrollPositionX >= (width * 2) && scrollPositionX <= ((width * 3) - 10)) {
-    //   this.setState({activeDot: 3})
-    // } else if(scrollPositionX >= (width * 3) && scrollPositionX <= ((width * 4) - 10)) {
-    //   this.setState({activeDot: 4})
-    // } else if(scrollPositionX >= (width * 4) && scrollPositionX <= ((width * 5) - 10)) {
-    //   this.setState({activeDot: 5})
-    // } else if(scrollPositionX >= (width * 5) && scrollPositionX <= ((width * 6) - 10)) {
-    //   this.setState({activeDot: 6})
-    // } else if(scrollPositionX >= (width * 6) && scrollPositionX <= ((width * 7) - 10)) {
-    //   this.setState({activeDot: 7})
-    // } else if(scrollPositionX >= (width * 7) && scrollPositionX <= ((width * 8) - 10)) {
-    //   this.setState({activeDot: 8})
-    // } else if(scrollPositionX >= (width * 8) && scrollPositionX <= ((width * 9) - 10)) {
-    //   this.setState({activeDot: 9})
-    // } else if(scrollPositionX >= (width * 9) && scrollPositionX <= ((width * 10) - 10)) {
-    //   this.setState({activeDot: 10})
-    // } else if(scrollPositionX >= (width * 10) && scrollPositionX <= ((width * 11) - 10)) {
-    //   this.setState({activeDot: 11})
-    // } else if(scrollPositionX >= (width * 11) && scrollPositionX <= ((width * 12) - 10)) {
-    //   this.setState({activeDot: 12})
-    // } else if(scrollPositionX >= (width * 12) && scrollPositionX <= ((width * 13) - 10)) {
-    //   this.setState({activeDot: 13})
-    // } else if(scrollPositionX >= (width * 13) && scrollPositionX <= ((width * 14) - 10)) {
-    //   this.setState({activeDot: 14})
-    // } else if(scrollPositionX >= (width * 14) && scrollPositionX <= ((width * 15) - 10)) {
-    //   this.setState({activeDot: 15})
-    // } else if(scrollPositionX >= (width * 15) && scrollPositionX <= ((width * 16) - 10)) {
-    //   this.setState({activeDot: 16})
-    // } else if(scrollPositionX >= (width * 16) && scrollPositionX <= ((width * 17) - 10)) {
-    //   this.setState({activeDot: 17})
-    // } else if(scrollPositionX >= (width * 17) && scrollPositionX <= ((width * 18) - 10)) {
-    //   this.setState({activeDot: 18})
-    // } else if(scrollPositionX >= (width * 18) && scrollPositionX <= ((width * 19) - 10)) {
-    //   this.setState({activeDot: 19})
-    // } else if(scrollPositionX >= (width * 19) && scrollPositionX <= ((width * 20) - 10)) {
-    //   this.setState({activeDot: 20})
-    // }
-
     const scrollPositionX = event.nativeEvent.contentOffset.x;
     const offset = 100;
+    let slidesLength;
 
-    if (scrollPositionX >= 0 && scrollPositionX <= parseInt(width - offset)) {
-      this.setState({ activeDot: 1 }, this.onScrollCb);
-    } else if (
-      scrollPositionX >= width - offset &&
-      scrollPositionX <= width * 2 - offset
-    ) {
-      this.setState({ activeDot: 2 }, this.onScrollCb);
-    } else if (
+    if (this.props.hasOwnProperty('renderSlides') 
+      && this.props.renderSlides.hasOwnProperty('props') 
+      && this.props.renderSlides.props.hasOwnProperty('children')) slidesLength = Object.keys(this.props.renderSlides.props.children).length;
+
       scrollPositionX >= width * 2 - offset &&
       scrollPositionX <= width * 3 - offset
-    ) {
-      this.setState({ activeDot: 3 }, this.onScrollCb);
-    } else if (
-      scrollPositionX >= width * 3 - offset &&
-      scrollPositionX <= width * 4 - offset
-    ) {
-      this.setState({ activeDot: 4 }, this.onScrollCb);
-    } else if (
-      scrollPositionX >= width * 4 - offset &&
-      scrollPositionX <= width * 5 - offset
-    ) {
-      this.setState({ activeDot: 5 }, this.onScrollCb);
-    } else if (
-      scrollPositionX >= width * 5 - offset &&
-      scrollPositionX <= width * 6 - offset
-    ) {
-      this.setState({ activeDot: 6 }, this.onScrollCb);
-    } else if (
-      scrollPositionX >= width * 6 - offset &&
-      scrollPositionX <= width * 7 - offset
-    ) {
-      this.setState({ activeDot: 7 }, this.onScrollCb);
-    } else if (
-      scrollPositionX >= width * 7 - offset &&
-      scrollPositionX <= width * 8 - offset
-    ) {
-      this.setState({ activeDot: 8 }, this.onScrollCb);
-    } else if (
-      scrollPositionX >= width * 8 - offset &&
-      scrollPositionX <= width * 9 - offset
-    ) {
-      this.setState({ activeDot: 9 }, this.onScrollCb);
-    } else if (
-      scrollPositionX >= width * 9 - offset &&
-      scrollPositionX <= width * 10 - offset
-    ) {
-      this.setState({ activeDot: 10 }, this.onScrollCb);
-    } else if (
-      scrollPositionX >= width * 10 - offset &&
-      scrollPositionX <= width * 11 - offset
-    ) {
-      this.setState({ activeDot: 11 }, this.onScrollCb);
-    } else if (
-      scrollPositionX >= width * 11 - offset &&
-      scrollPositionX <= width * 12 - offset
-    ) {
-      this.setState({ activeDot: 12 }, this.onScrollCb);
-    } else if (
-      scrollPositionX >= width * 12 - offset &&
-      scrollPositionX <= width * 13 - offset
-    ) {
-      this.setState({ activeDot: 13 }, this.onScrollCb);
-    } else if (
-      scrollPositionX >= width * 13 - offset &&
-      scrollPositionX <= width * 14 - offset
-    ) {
-      this.setState({ activeDot: 14 }, this.onScrollCb);
-    } else if (
-      scrollPositionX >= width * 14 - offset &&
-      scrollPositionX <= width * 15 - offset
-    ) {
-      this.setState({ activeDot: 15 }, this.onScrollCb);
-    } else if (
-      scrollPositionX >= width * 15 - offset &&
-      scrollPositionX <= width * 16 - offset
-    ) {
-      this.setState({ activeDot: 16 }, this.onScrollCb);
-    } else if (
-      scrollPositionX >= width * 16 - offset &&
-      scrollPositionX <= width * 17 - offset
-    ) {
-      this.setState({ activeDot: 17 }, this.onScrollCb);
-    } else if (
-      scrollPositionX >= width * 17 - offset &&
-      scrollPositionX <= width * 18 - offset
-    ) {
-      this.setState({ activeDot: 18 }, this.onScrollCb);
-    } else if (
-      scrollPositionX >= width * 18 - offset &&
-      scrollPositionX <= width * 19 - offset
-    ) {
-      this.setState({ activeDot: 19 }, this.onScrollCb);
-    } else if (
-      scrollPositionX >= width * 19 - offset &&
-      scrollPositionX <= width * 20 - offset
-    ) {
-      this.setState({ activeDot: 20 }, this.onScrollCb);
+
+    if (slidesLength) {
+      for (let iter of new Array(slidesLength).fill(null).keys()) {
+        const index = iter + 1;
+        
+        if (scrollPositionX >= (width * iter) - offset && scrollPositionX <= (width * index) - offset) {
+          this.setState({ activeDot: index }, this.onScrollCb);
+          break;
+        }
+      }
     }
   };
 
