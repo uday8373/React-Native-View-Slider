@@ -1,23 +1,33 @@
-import React from 'react';
-import { View, Text, ScrollView, Dimensions } from 'react-native';
+import React, { Component } from 'react';
+import { View, ScrollView, Dimensions } from 'react-native';
 import Dots from './dots';
 
 const { width } = Dimensions.get('window');
 
-export default class ViewSlider extends React.Component {
+export default class ViewSlider extends Component {
   constructor() {
     super();
 
     this.slidesCount = 0;
+    this.scrollPosX = 0;
   }
 
   state = {
-    activeDot: 1,
+    scrollPosX: 0,
+    step: 1,
     autoSlide: false,
   };
 
-  static getDerivedStateFromProps(prevState, nextProp) {
-    return (autoSlide = nextProp.autoSlide);
+  static getDerivedStateFromProps(props, state) {
+    return {
+      scrollPosX: props.hasOwnProperty('scrollPosX') ? state.scrollPosX : 0,
+      step: props.hasOwnProperty('step') ? props.step : 1,
+      autoSlide: props.hasOwnProperty('autoSlide') ? props.autoSlide : false,
+    };
+  }
+
+  componentDidUpdate(props) {
+    if (props.step !== this.state.step) this.setStep(this.state.step);
   }
 
   componentDidMount() {
@@ -40,11 +50,13 @@ export default class ViewSlider extends React.Component {
 
   startAutoSlide = () => {
     const interval = this.props.slideInterval;
+
     if (interval < 1000) {
       console.warn('slideInterval time must be at least 1000 milisecond.');
     } else {
       const count = this.slidesCount;
       let step = 1;
+
       setInterval(() => {
         this.setStep(step + 1);
 
@@ -60,32 +72,19 @@ export default class ViewSlider extends React.Component {
   setStep = (step = 1) => {
     const scrollToX = (this.slidesCount * width) - ((this.slidesCount - (step - 1)) * width);
     
-    setTimeout(() => {
-      this.scroll.scrollTo({ x: scrollToX });
-      this.setState({ activeDot: step });
-    }, 50);
+    setTimeout(() => this.scroll.scrollTo({ x: scrollToX }), 50);
   }
 
-  onScrollCb = () => {
-    if (this.props.hasOwnProperty('onScroll')) this.props.onScroll(this.state.activeDot);
+  onScrollCb = (index) => {
+    if (this.props.hasOwnProperty('onScroll')) this.props.onScroll(index);
   }
 
-  onScroll = (event) => {
-    const scrollPositionX = event.nativeEvent.contentOffset.x;
-    const offset = 100;
-
-    if (this.slidesCount > 0) {
-      for (let iter of new Array(this.slidesCount).fill(null).keys()) {
-        const index = iter + 1;
-        
-        if (scrollPositionX >= (width * iter) - offset && scrollPositionX <= (width * index) - offset) {
-          this.setState({ activeDot: index }, this.onScrollCb);
-          break;
-        }
-      }
-    }
-  };
-
+  onMomentumScrollEnd = ({ nativeEvent }) => {
+    const index = Math.round(nativeEvent.contentOffset.x / width) + 1;
+ 
+    this.setState({ step: index }, this.props.onScroll(index));
+  }
+ 
   render() {
     const {
       dots,
@@ -93,7 +92,7 @@ export default class ViewSlider extends React.Component {
       dotInactiveColor,
       dotsContainerStyle,
     } = this.props;
-    const { activeDot } = this.state;
+    const { step } = this.state;
 
     return (
       <View style={[{ width, height: this.props.height }, this.props.style]}>
@@ -103,7 +102,8 @@ export default class ViewSlider extends React.Component {
           pagingEnabled={true}
           ref={(node) => (this.scroll = node)}
           scrollEventThrottle={70}
-          onScroll={(s) => this.onScroll(s)}
+          onScroll={this.onScroll}
+          onMomentumScrollEnd={this.onMomentumScrollEnd}
           showsHorizontalScrollIndicator={false}
         >
           {this.props.renderSlides}
@@ -113,7 +113,7 @@ export default class ViewSlider extends React.Component {
             activeColor={dotActiveColor}
             inactiveColor={dotInactiveColor}
             count={slidesCount}
-            activeDot={activeDot}
+            activeDot={step}
             containerStyle={dotsContainerStyle}
           />
         )}

@@ -13,7 +13,7 @@ declare module 'react-native-view-slider' {
     dots?: boolean,
     autoSlide?: boolean, 
     slideInterval?: number,
-    slideCount?: function,
+    slidesCount?: function,
     renderSlides: JSX.Element, 
   }> {}
 }
